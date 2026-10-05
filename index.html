@@ -220,6 +220,81 @@ mark ins{text-decoration:none;font-weight:600;color:var(--ck)}
 @media (max-width: 760px) { .lh-foot { height: 124px; } .lh-foot img { width: 100px; } .lh-foot::before { width: 90px; } .lh-foot::after { width: 190px; } }
 .top .apptitle { font-size: 20px; margin: 0; }
 .mask{-webkit-text-security:disc;text-security:disc}
+
+/* teacher bar: tabs + name privacy */
+.tbar{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between;margin:0 0 14px;padding:6px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r)}
+.tabs{display:flex;gap:4px}
+.tabs button{border:0;background:none;border-radius:8px;padding:8px 18px;font-weight:600;color:var(--muted);min-height:38px}
+.tabs button[aria-selected="true"]{background:var(--accent);color:var(--surface)}
+.namectl{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;font-size:12.5px;color:var(--muted);padding-right:6px}
+.namectl label{display:flex;align-items:center;gap:6px}
+.namectl select{padding:6px 8px;border:1px solid var(--line);border-radius:8px;background:var(--sunk);color:var(--fg);font:inherit;font-size:13px;min-height:36px}
+.nlive{font-size:12px;font-weight:700;color:var(--warn);display:inline-flex;align-items:center;gap:6px}
+.nlive::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--warn)}
+/* dashboard */
+.dash{display:flex;flex-direction:column;gap:16px}
+.d2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;align-items:start}
+@media (max-width:900px){.d2{grid-template-columns:minmax(0,1fr)}}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.kpi b{display:block;font-size:22px;font-variant-numeric:tabular-nums;line-height:1.2}
+.kpi span{font-size:12px;color:var(--muted)}
+.kpi small{display:block;font-size:11.5px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hist{display:flex;align-items:flex-end;gap:8px;height:180px;border-bottom:1px solid var(--line)}
+.hist .col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;gap:4px;min-width:0}
+.hist .col b{font-size:12px;font-variant-numeric:tabular-nums}
+.hist .col i{display:block;width:100%;max-width:46px;background:var(--accent);border-radius:4px 4px 0 0}
+.hlab{display:flex;gap:8px;margin-top:6px}.hlab span{flex:1;text-align:center;font-size:11px;color:var(--muted);min-width:0}
+.bands{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.hbar{display:grid;grid-template-columns:minmax(96px,150px) minmax(0,1fr) 44px;gap:10px;align-items:center;padding:7px 0;font-size:13px}
+.hbar .trk{height:10px;background:var(--sunk);border-radius:4px;overflow:hidden}
+.hbar .trk i{display:block;height:100%;background:var(--accent);border-radius:0 4px 4px 0}
+.hbar b{text-align:right;font-variant-numeric:tabular-nums}
+.note{font-size:12.5px;color:var(--muted);margin:8px 0 0}
+.tscroll{overflow:auto;max-height:640px;border:1px solid var(--line);border-radius:10px}
+table.rk{width:100%;border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums}
+.rk th{position:sticky;top:0;z-index:1;background:var(--surface);font-size:11.5px;color:var(--muted);font-weight:600;border-bottom:1px solid var(--line);padding:0;text-align:right}
+.rk th button{border:0;background:none;width:100%;text-align:inherit;padding:9px 8px;font-weight:600;color:inherit;white-space:nowrap}
+.rk th[aria-sort] button{color:var(--accent)}
+.rk td{padding:7px 8px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
+.rk .l{text-align:left}
+.rk tbody tr{cursor:pointer}.rk tbody tr:hover{background:var(--sunk)}
+.rk .low{color:var(--bad);font-weight:600}
+.ec{border-top:1px solid var(--line)}
+.ec:first-of-type{border-top:0}
+.ec summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;padding:10px 0}
+.ec summary::-webkit-details-marker{display:none}
+.ec summary .t{font-weight:600;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.ec summary .m{font-size:12px;color:var(--muted);text-align:right;font-variant-numeric:tabular-nums}
+.ec summary .trk{grid-column:1/-1;height:8px;background:var(--sunk);border-radius:4px;overflow:hidden}
+.ec summary .trk i{display:block;height:100%;background:var(--accent);border-radius:0 4px 4px 0}
+.ec[open] summary .t::after{content:"▾";color:var(--muted)}
+.ec summary .t::after{content:"▸";color:var(--muted)}
+.exl{margin:0 0 10px;padding:0;list-style:none;display:flex;flex-direction:column;gap:6px}
+.exl li{font-size:13px;background:var(--sunk);border-radius:8px;padding:6px 10px}
+.exl del{color:var(--muted)}
+.exl ins{text-decoration:none;font-weight:600}
+.exl .w{display:block;font-size:12px;color:var(--muted)}
+.who-l{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 12px}
+.who-l button{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:3px 10px;font-size:12px}
+.who-l button:hover{background:var(--sunk)}
+.prio{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px;counter-reset:p}
+.prio li{display:grid;grid-template-columns:28px minmax(0,1fr);gap:10px;font-size:13.5px}
+.prio li::before{counter-increment:p;content:counter(p);width:26px;height:26px;border-radius:50%;background:var(--accent-soft);color:var(--accent);font-weight:700;display:grid;place-items:center}
+.prio small{display:block;color:var(--muted);font-size:12.5px}
+.hmwrap{overflow:auto;max-height:640px}
+table.hm{border-collapse:separate;border-spacing:3px;font-size:12px;font-variant-numeric:tabular-nums}
+.hm thead th{position:sticky;top:0;background:var(--surface);z-index:1;font-size:11px;font-weight:600;color:var(--muted);vertical-align:bottom;padding:2px}
+.hm thead th span{writing-mode:vertical-rl;transform:rotate(180deg);white-space:nowrap;display:inline-block;max-height:150px}
+.hm th.row{position:sticky;left:0;background:var(--surface);text-align:left;font-weight:500;white-space:nowrap;padding:0 8px 0 0;z-index:0}
+.hm th.row button{border:0;background:none;padding:4px 0;font-weight:500;max-width:190px;overflow:hidden;text-overflow:ellipsis}
+.hm td{min-width:30px;height:28px;text-align:center;border-radius:4px;background:var(--sunk);color:transparent}
+.hm td.c1{background:color-mix(in srgb,var(--accent) 24%,var(--surface));color:var(--fg)}
+.hm td.c2{background:color-mix(in srgb,var(--accent) 52%,var(--surface));color:var(--fg)}
+.hm td.c3{background:var(--accent);color:var(--surface);font-weight:700}
+.hm td.tot{background:none;color:var(--fg);font-weight:700}
+.hmkey{display:flex;gap:10px;align-items:center;font-size:12px;color:var(--muted);margin-top:10px;flex-wrap:wrap}
+.hmkey i{display:inline-block;width:16px;height:12px;border-radius:3px;vertical-align:-1px;margin-right:4px}
 </style>
 </head>
 <body>
@@ -253,8 +328,9 @@ mark ins{text-decoration:none;font-weight:600;color:var(--ck)}
 </div>
 <div class="stats" id="stats"></div>
 </header>
-<div class="mob"><div class="mob-row"><button class="navbtn" id="mprev" aria-label="Previous essay">‹</button><select id="sel" aria-label="Choose a student code"></select><button class="navbtn" id="mnext" aria-label="Next essay">›</button></div></div>
-<div class="grid">
+<div class="tbar teach" id="tbar"><div class="tabs" role="tablist" aria-label="Teacher views"><button type="button" role="tab" id="tab-ess" aria-selected="true">Essays</button><button type="button" role="tab" id="tab-dash" aria-selected="false">Dashboard</button></div><div class="namectl"><span class="nlive" id="nlive" hidden></span><label>Names <select id="nmode"><option value="code">Codes only (HV01–HV42)</option><option value="real">Show real names</option></select></label><label>Reveal one name <select id="nreveal"><option value="">— none —</option></select></label></div></div>
+<div class="mob" id="mob"><div class="mob-row"><button class="navbtn" id="mprev" aria-label="Previous essay">‹</button><select id="sel" aria-label="Choose a student code"></select><button class="navbtn" id="mnext" aria-label="Next essay">›</button></div></div>
+<div class="grid" id="essView">
 <aside class="card side">
 <div class="side-h">
 <input id="q" type="search" placeholder="Search by name or number" aria-label="Search students">
@@ -267,6 +343,7 @@ mark ins{text-decoration:none;font-weight:600;color:var(--ck)}
 <main class="card" id="essayCard"></main>
 <section class="panel" id="panel"></section>
 </div>
+<div class="dash" id="dash" hidden></div>
 </div>
 <script>
 let DATA=[];
@@ -282,6 +359,12 @@ const bandName=x=>x>=8?"Very good":x>=6.5?"Good":x>=5?"Average":"Weak";
 const esc=s=>s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const flagOf=d=>d.g.filter(g=>g[0].startsWith("⚠")).length?"Check":(d.cmt.includes("OFF-TOPIC")?"Off-topic":"");
 let cur=0,sortBy="n",showFix=false,off=new Set();
+// Teacher privacy: codes by default; real names only via the "Names" or "Reveal one name" dropdowns
+let nmode="code",reveal=0,view="ess",rkSort={k:"rk",dir:1};
+const code=d=>"HV"+String(d.n).padStart(2,"0");
+const isAdmin=()=>!$("app").classList.contains("solo");
+const showName=d=>!isAdmin()||nmode==="real"||reveal===d.n;
+const label=d=>showName(d)?d.name:code(d);
 const $=id=>document.getElementById(id);
 document.getElementById("app").classList.add("solo");
 // stats
@@ -290,11 +373,11 @@ const c=i=>STATS.c[i];
 $("stats").innerHTML=[[av,"Class average"],[c(0),"Task"],[c(1),"Organization"],[c(2),"Vocabulary"],[c(3),"Grammar"],[n,"Essays"]].map(([b,s])=>`<div class="stat"><b>${b}</b><span>${s}</span></div>`).join("")})();
 function renderList(){
 const q=$("q").value.trim().toLowerCase();
-let L=DATA.map((d,i)=>({d,i})).filter(x=>!q||x.d.name.toLowerCase().includes(q)||String(x.d.n)===q);
+let L=DATA.map((d,i)=>({d,i})).filter(x=>!q||(showName(x.d)&&x.d.name.toLowerCase().includes(q))||code(x.d).toLowerCase().includes(q)||String(x.d.n)===q);
 if(sortBy==="sc")L.sort((a,b)=>avg(a.d.s)-avg(b.d.s));
-$("list").innerHTML=L.map(({d,i})=>{const a=avg(d.s),f=flagOf(d);return `<button class="li" data-i="${i}" aria-current="${i===cur}"><span class="no">#${d.n}</span><span style="min-width:0"><span class="nm">${esc(d.name)}</span></span><span class="pill ${band(a)}">${a.toFixed(1)}</span></button>`}).join("")||`<p class="sub" style="padding:8px">No student found.</p>`;
+$("list").innerHTML=L.map(({d,i})=>{const a=avg(d.s),f=flagOf(d);return `<button class="li" data-i="${i}" aria-current="${i===cur}"><span class="no">#${d.n}</span><span style="min-width:0"><span class="nm">${esc(label(d))}</span></span><span class="pill ${band(a)}">${a.toFixed(1)}</span></button>`}).join("")||`<p class="sub" style="padding:8px">No student found.</p>`;
 $("mprev").disabled=cur===0;$("mnext").disabled=cur===DATA.length-1;
-$("sel").innerHTML=DATA.map((d,i)=>`<option value="${i}" ${i===cur?"selected":""}>#${d.n} · ${esc(d.name)} — ${avg(d.s).toFixed(1)}</option>`).join("");
+$("sel").innerHTML=DATA.map((d,i)=>`<option value="${i}" ${i===cur?"selected":""}>#${d.n} · ${esc(label(d))} — ${avg(d.s).toFixed(1)}</option>`).join("");
 }
 function essayHTML(d){
 let h="",p=0;
@@ -307,10 +390,10 @@ return h.split("\n").map(l=>`<p>${l||"&nbsp;"}</p>`).join("");
 function render(){
 const d=DATA[cur],a=avg(d.s);
 const cnt={};d.e.forEach(e=>cnt[e.k]=(cnt[e.k]||0)+1);
-const ini=d.name.split(" ").filter(Boolean).map(w=>w[0]).slice(-2).join("").toUpperCase();
+const ini=showName(d)?d.name.split(" ").filter(Boolean).map(w=>w[0]).slice(-2).join("").toUpperCase():String(d.n).padStart(2,"0");
 const warn=d.g.filter(g=>g[0].startsWith("⚠")).map(g=>g[0]);
 $("essayCard").innerHTML=`
-<div class="ess-h"><div class="who"><div class="av">${ini}</div><div><b>${esc(d.name)}</b><span>Class CK1-51 · Task A1 (30/09/2026)</span></div></div>
+<div class="ess-h"><div class="who"><div class="av">${ini}</div><div><b>${esc(label(d))}</b><span>${isAdmin()&&showName(d)?code(d)+" · ":""}Class CK1-51 · Task A1 (30/09/2026)</span></div></div>
 <div class="meta"><div><span>Task</span><b>A1 · Task 1</b></div>${d.t?`<div><span>Submitted</span><b>${d.d.split(" · ")[0]}</b></div><div><span>Time</span><b>${d.t} min</b></div>`:""}<div><span>Words</span><b style="color:${d.w<120?"var(--bad)":"inherit"}">${d.w}${d.w<120?" / 120":""}</b></div></div></div>
 <div class="prompt"><b>Task:</b> Your friend Jack is moving to your city next month for a new job. He asks where he should live, the best way to get to work, and what he can do at the weekend to stay active and make friends. Write a reply (at least 120 words).</div>
 ${warn.map(w=>`<div class="flag teach">${esc(w)}</div>`).join("")}
@@ -396,9 +479,85 @@ const key=await crypto.subtle.deriveKey({name:"PBKDF2",salt:ub(v[1]),iterations:
 const pt=await crypto.subtle.decrypt({name:"AES-GCM",iv:ub(v[2])},key,ub(v[3]));
 return JSON.parse(new TextDecoder().decode(pt));
 }
+
+// ---- Teacher dashboard: ranking + error analysis (computed from the decrypted essays, nothing stored) ----
+const ERR=[["task",/./,"T"],["frame",/greet|sign|dear|best wishes|frame|heading|closing|opening|salutation/,"OV"],["layout",/./,"O"],
+["spell",/spell|typo|keyboard|misspel/,"VG"],["caps",/capital/,"VG"],["plural",/plural|singular|countable/,"VG"],["article",/article|‘a’|‘an’|‘the’/,"VG"],
+["prep",/preposition|‘(to|at|in|on|for|of)’/,"VG"],["verb",/tense|verb|third-person|-ing|infinitive|\+ v|gerund|modal|passive|agree|subject/,"VG"],
+["punct",/comma|full stop|punctuation|spacing|\?|apostrophe|space/,"VG"],["struct",/order|question|structure|split|stand alone|fragment|extra|missing|link|sentence|clause/,"VG"],
+["word",/./,"V"],["struct",/./,"G"]];
+const ECL={task:"Task content",frame:"Letter frame (greeting, sign-off)",layout:"Paragraphs & layout",spell:"Spelling & typos",caps:"Capital letters",plural:"Plurals & countable nouns",article:"Articles",prep:"Prepositions",verb:"Verb forms & tenses",punct:"Punctuation & spacing",struct:"Sentence structure",word:"Word choice & natural phrasing"};
+const ECS={task:"Task content",frame:"Letter frame",layout:"Layout",spell:"Spelling",caps:"Capitals",plural:"Plurals",article:"Articles",prep:"Prepositions",verb:"Verb forms",punct:"Punctuation",struct:"Sentence structure",word:"Word choice"};
+const ecat=e=>{const w=e.why.toLowerCase();for(const r of ERR)if(r[2].includes(e.k)&&r[1].test(w))return r[0];return "word"};
+function renderDash(){
+const L=DATA.map((d,i)=>({d,i,a:avg(d.s),ne:d.e.length})),n=L.length;
+const byA=[...L].sort((x,y)=>y.a-x.a||x.d.n-y.d.n);byA.forEach((x,j)=>{x.rk=j&&x.a===byA[j-1].a?byA[j-1].rk:j+1});
+const vs=L.map(x=>x.a).sort((p,q)=>p-q),med=n%2?vs[(n-1)/2]:(vs[n/2-1]+vs[n/2])/2;
+const under=L.filter(x=>x.d.w<120).length,tot=L.reduce((s,x)=>s+x.ne,0),flg=L.filter(x=>flagOf(x.d)).length;
+const nm=x=>esc(label(x.d)),pct=v=>Math.round(v/n*100);
+const C={};L.forEach(x=>x.d.e.forEach(e=>{const c=ecat(e),o=C[c]||(C[c]={c,n:0,st:new Map(),ex:[],k:{}});o.n++;o.st.set(x.i,(o.st.get(x.i)||0)+1);o.k[e.k]=(o.k[e.k]||0)+1;if(o.ex.length<5&&!o.ex.some(z=>z.q===e.q))o.ex.push({e,x})}));
+const cats=Object.values(C).sort((p,q)=>q.st.size-p.st.size||q.n-p.n);
+const mk=o=>Object.entries(o.k).sort((p,q)=>q[1]-p[1])[0][0];
+const kpi=(b,s,sm)=>`<div class="kpi"><b>${b}</b><span>${s}</span>${sm?`<small>${sm}</small>`:""}</div>`;
+// distribution
+const BL=["<3","3–3.9","4–4.9","5–5.9","6–6.9","7–7.9","8–8.9","9–10"],bins=BL.map(()=>[]);
+L.forEach(x=>bins[x.a<3?0:Math.min(7,Math.floor(x.a)-2)].push(x));const bmax=Math.max(...bins.map(b=>b.length),1);
+const bandsN=["Weak","Average","Good","Very good"].map(b=>[b,L.filter(x=>bandName(x.a)===b).length]);
+const bandCls={"Weak":"b-bad","Average":"b-lo","Good":"b-mid","Very good":"b-hi"};
+// criteria
+const cr=CR.map((c,i)=>{const v=L.map(x=>x.d.s[i]);return{c,av:v.reduce((p,q)=>p+q,0)/n,lo:L.filter(x=>x.d.s[i]<5).length}});
+const weakest=[...cr].sort((p,q)=>p.av-q.av)[0];
+// ranking
+const keyf={rk:x=>x.rk,st:x=>x.d.n,sc:x=>-x.a,t:x=>-x.d.s[0],o:x=>-x.d.s[1],v:x=>-x.d.s[2],g:x=>-x.d.s[3],w:x=>-x.d.w,e:x=>-x.ne};
+const R=[...L].sort((p,q)=>(keyf[rkSort.k](p)-keyf[rkSort.k](q))*rkSort.dir||p.rk-q.rk||p.d.n-q.d.n);
+const th=(k,t,cls)=>`<th class="${cls||""}" ${rkSort.k===k?`aria-sort="${rkSort.dir>0?(k==="rk"||k==="st"?"ascending":"descending"):(k==="rk"||k==="st"?"descending":"ascending")}"`:""}><button type="button" data-sort="${k}">${t}${rkSort.k===k?(rkSort.dir>0?" ↓":" ↑"):""}</button></th>`;
+const cell=v=>`<td class="${v<5?"low":""}">${v}</td>`;
+// heatmap
+const HR=[...L].sort((p,q)=>q.ne-p.ne||p.d.n-q.d.n);
+$("dash").innerHTML=`
+<div class="kpis">${kpi(STATS.av,"Class average","median "+med.toFixed(2).replace(/0$/,""))}${kpi(byA[0].a.toFixed(1),"Highest",nm(byA[0]))}${kpi(byA[n-1].a.toFixed(1),"Lowest",nm(byA[n-1]))}${kpi(under,"Under 120 words",pct(under)+"% of essays")}${kpi(tot,"Errors marked",(tot/n).toFixed(1)+" per essay")}${kpi(flg,"Essays to check","off-topic or flagged")}</div>
+<div class="d2">
+<div class="card sec"><h2>Score distribution <small>${n} essays · essay score /10</small></h2>
+<div class="hist" role="img" aria-label="Number of essays in each score range">${bins.map((b,j)=>`<div class="col" title="${BL[j]}: ${b.length} essay${b.length===1?"":"s"}${b.length?" – "+esc(b.map(x=>label(x.d)).join(", ")):""}"><b>${b.length||""}</b><i style="height:${b.length/bmax*100}%;${b.length?"":"min-height:0"}"></i></div>`).join("")}</div>
+<div class="hlab">${BL.map(l=>`<span>${l}</span>`).join("")}</div>
+<div class="bands">${bandsN.map(([b,c])=>`<span class="pill ${bandCls[b]}">${b} · ${c}</span>`).join("")}</div>
+<p class="note">Weak &lt;5 · Average 5–6.4 · Good 6.5–7.9 · Very good ≥8</p></div>
+<div class="card sec"><h2>Criteria averages <small>/10 · students below 5</small></h2>
+${cr.map(c=>`<div class="hbar" title="${c.c}: average ${c.av.toFixed(2)} · ${c.lo} student${c.lo===1?"":"s"} below 5"><span>${c.c}</span><div class="trk"><i style="width:${c.av*10}%"></i></div><b>${c.av.toFixed(1)}</b></div>`).join("")}
+<p class="note">Weakest criterion: <b style="color:var(--fg)">${weakest.c}</b> (${weakest.av.toFixed(1)}) · ${cr.map(c=>`${c.c.split(" ")[0]} &lt;5: ${c.lo}`).join(" · ")}</p></div>
+</div>
+<div class="card sec"><h2>Ranking <small>tap a column to sort · tap a row to open the essay</small></h2>
+<div class="tscroll"><table class="rk"><thead><tr>${th("rk","#","l")}${th("st","Student","l")}${th("sc","Score")}${th("t","Task")}${th("o","Org.")}${th("v","Vocab")}${th("g","Gram.")}${th("w","Words")}${th("e","Errors")}<th class="l"><button type="button" tabindex="-1">Band</button></th></tr></thead>
+<tbody>${R.map(x=>`<tr data-go="${x.i}"><td class="l">${x.rk}</td><td class="l"><b>${nm(x)}</b></td><td><span class="pill ${band(x.a)}">${x.a.toFixed(1)}</span></td>${x.d.s.map(cell).join("")}<td class="${x.d.w<120?"low":""}">${x.d.w}</td><td>${x.ne}</td><td class="l">${bandName(x.a)}${flagOf(x.d)?` · <span style="color:var(--warn)">${flagOf(x.d)}</span>`:""}</td></tr>`).join("")}</tbody></table></div></div>
+<div class="d2">
+<div class="card sec"><h2>Common errors <small>by students affected · tap to see examples</small></h2>
+${cats.map(o=>`<details class="ec"><summary><span class="t">${ECL[o.c]} <span class="tag k-${mk(o)}">${KS[mk(o)]}</span></span><span class="m">${o.st.size} students (${pct(o.st.size)}%) · ${o.n} errors</span><span class="trk"><i style="width:${o.st.size/n*100}%"></i></span></summary>
+<ul class="exl">${o.ex.map(({e,x})=>`<li><del>${esc(e.q)}</del> → <ins>${esc(e.fix).replace(/\n/g," / ")}</ins><span class="w">${esc(e.why)} · ${nm(x)}</span></li>`).join("")}</ul>
+<div class="who-l">${[...o.st].sort((p,q)=>q[1]-p[1]||DATA[p[0]].n-DATA[q[0]].n).map(([i,c])=>`<button type="button" data-go="${i}">${esc(label(DATA[i]))}${c>1?" ×"+c:""}</button>`).join("")}</div></details>`).join("")}</div>
+<div class="card sec"><h2>Teaching priorities <small>most widespread first</small></h2>
+<ol class="prio">${cats.slice(0,3).map(o=>{const z=o.ex[0];return `<li><span><b>${ECL[o.c]}</b> – ${o.st.size} of ${n} students (${pct(o.st.size)}%), ${o.n} errors.<small>e.g. “${esc(z.e.q)}” → “${esc(z.e.fix).replace(/\n/g," / ")}”</small></span></li>`}).join("")}
+<li><span><b>${weakest.c}</b> is the weakest criterion (class average ${weakest.av.toFixed(1)}; ${weakest.lo} students below 5).${under?`<small>${under} essays are under 120 words – remind the class to develop each of the 3 points.</small>`:""}</span></li></ol></div>
+</div>
+<div class="card sec"><h2>Error map <small>students × error types · darker = more errors</small></h2>
+<div class="hmwrap"><table class="hm"><thead><tr><th></th>${cats.map(o=>`<th title="${ECL[o.c]}"><span>${ECS[o.c]}</span></th>`).join("")}<th><span>Total</span></th></tr></thead>
+<tbody>${HR.map(x=>`<tr><th class="row"><button type="button" data-go="${x.i}">${nm(x)}</button></th>${cats.map(o=>{const c=o.st.get(x.i)||0;return `<td class="${c?"c"+Math.min(c,3):""}" title="${esc(label(x.d))} · ${ECL[o.c]}: ${c}">${c||""}</td>`}).join("")}<td class="tot">${x.ne}</td></tr>`).join("")}</tbody></table></div>
+<div class="hmkey"><span><i style="background:var(--sunk)"></i>0</span><span><i style="background:color-mix(in srgb,var(--accent) 24%,var(--surface))"></i>1</span><span><i style="background:color-mix(in srgb,var(--accent) 52%,var(--surface))"></i>2</span><span><i style="background:var(--accent)"></i>3+</span></div></div>`;
+}
+function setView(v){view=v;closePop();
+$("tab-ess").setAttribute("aria-selected",v==="ess");$("tab-dash").setAttribute("aria-selected",v==="dash");
+$("essView").hidden=v!=="ess";$("mob").hidden=v!=="ess";$("dash").hidden=v!=="dash";
+if(v==="dash")renderDash();else{$("dash").innerHTML="";render()}}
+function updNameUI(){const on=nmode==="real"||reveal;$("nlive").hidden=!on;$("nlive").textContent=nmode==="real"?"Real names visible":code(DATA.find(d=>d.n===reveal)||{n:reveal})+" name visible";
+$("nreveal").disabled=nmode==="real";$("q").placeholder=nmode==="real"?"Search by name or number":"Search by code or number"}
+function refresh(){updNameUI();view==="dash"?renderDash():render()}
+$("tab-ess").onclick=()=>setView("ess");$("tab-dash").onclick=()=>setView("dash");
+$("nmode").onchange=e=>{nmode=e.target.value;reveal=0;$("nreveal").value="";refresh()};
+$("nreveal").onchange=e=>{reveal=+e.target.value||0;refresh()};
+$("dash").addEventListener("click",e=>{const s=e.target.closest("[data-sort]");if(s){const k=s.dataset.sort;rkSort=rkSort.k===k?{k,dir:-rkSort.dir}:{k,dir:1};renderDash();return}
+const g=e.target.closest("[data-go]");if(g){e.stopPropagation();cur=+g.dataset.go;setView("ess");$("essayCard").scrollIntoView({block:"start",behavior:"smooth"})}});
 const RK="vstep-ck151-a1-login";
 function showApp(d,name){d.name=name.trim().replace(/\s+/g," ");DATA=[d];cur=0;$("gate").hidden=true;$("app").hidden=false;$("who").textContent=d.name;render();scrollTo(0,0)}
-function showAdmin(all,name){DATA=all;cur=0;$("app").classList.remove("solo");$("gate").hidden=true;$("app").hidden=false;$("who").textContent=name.trim().replace(/\s+/g," ")+" · Teacher (full access)";render();scrollTo(0,0)}
+function showAdmin(all,name){DATA=all;cur=0;nmode="code";reveal=0;rkSort={k:"rk",dir:1};$("app").classList.remove("solo");$("gate").hidden=true;$("app").hidden=false;$("who").textContent=name.trim().replace(/\s+/g," ")+" · Teacher (full access)";$("nmode").value="code";$("nreveal").innerHTML='<option value="">— none —</option>'+DATA.map(d=>`<option value="${d.n}">${code(d)}</option>`).join("");$("nreveal").value="";updNameUI();setView("ess");scrollTo(0,0)}
 async function tryLogin(name,cls,code,remember,quiet){
 $("lerr").hidden=true;$("signin").disabled=true;$("signin").textContent="Checking…";
 let d=null,all=null;try{all=await unlockAdmin(name,code)}catch(e){all=null}
@@ -413,7 +572,7 @@ if(!n.trim()||!p.trim()){$("lerr").textContent="Please fill in your full name, c
 tryLogin(n,c,p,false,false)});
 const NOMASK=!(window.CSS&&CSS.supports&&CSS.supports("-webkit-text-security","disc"));if(NOMASK){$("pw").type="password";$("pw").setAttribute("autocomplete","new-password")}
 $("showpw").onclick=()=>{const p=$("pw"),t=NOMASK?p.type==="password":p.classList.contains("mask");if(NOMASK)p.type=t?"text":"password";else p.classList.toggle("mask",!t);$("showpw").textContent=t?"Hide":"Show";$("showpw").setAttribute("aria-pressed",t)};
-$("signout").onclick=()=>{$("app").classList.add("solo");try{localStorage.removeItem(RK)}catch(e){}DATA=[];closePop();$("app").hidden=true;$("gate").hidden=false;$("pw").value="";scrollTo(0,0)};
+$("signout").onclick=()=>{nmode="code";reveal=0;view="ess";$("dash").innerHTML="";$("dash").hidden=true;$("essView").hidden=false;$("mob").hidden=false;$("nreveal").innerHTML="";$("app").classList.add("solo");try{localStorage.removeItem(RK)}catch(e){}DATA=[];closePop();$("app").hidden=true;$("gate").hidden=false;$("pw").value="";scrollTo(0,0)};
 try{localStorage.removeItem(RK)}catch(e){}
 </script>
 <footer class="lh-foot"><img src="assets/lh-logo.webp" alt="JH – levienlanhuong.com" width="124" height="94" loading="lazy"></footer>
