@@ -62,6 +62,9 @@ h1{font-size:24px;line-height:1.25;margin:2px 0 0;text-wrap:balance;font-weight:
 .b-lo{background:color-mix(in srgb,var(--warn) 18%,transparent);color:var(--warn)}
 .b-bad{background:color-mix(in srgb,var(--bad) 16%,transparent);color:var(--bad)}
 .mob{display:none}
+.mob-row{display:flex;gap:8px;align-items:center}.mob-row select{flex:1;min-width:0;min-height:44px}.navbtn{flex:none;width:44px;height:44px;border-radius:10px;border:1px solid var(--line);background:var(--surface);font-size:22px;line-height:1;color:var(--accent)}.navbtn:disabled{opacity:.35}
+#essayCard{scroll-margin-top:76px}
+button,mark,select{-webkit-tap-highlight-color:transparent}
 /* essay */
 .ess-h{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;padding:14px 18px;border-bottom:1px solid var(--line)}
 .who{display:flex;gap:10px;align-items:center;min-width:0;flex:1 1 220px}
@@ -142,8 +145,9 @@ mark ins{text-decoration:none;font-weight:600;color:var(--ck)}
 .toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--fg);color:var(--bg);padding:8px 14px;border-radius:8px;font-size:13px}
 .solo .side,.solo .stats,.solo .nav,.solo .mob,.solo .teach{display:none!important}
 .solo .grid{grid-template-columns:minmax(0,1.15fr) minmax(0,1fr)}
-@media (max-width:1100px){.grid,.solo .grid{grid-template-columns:minmax(0,1fr)}.side{display:none}.mob{display:block;margin-bottom:12px}.errs{max-height:none}}
-@media (max-width:520px){.scores{grid-template-columns:repeat(2,minmax(0,1fr))}.essay{font-size:15.5px}h1{font-size:20px}}
+@media (max-width:1100px){.grid,.solo .grid{grid-template-columns:minmax(0,1fr)}.side{display:none}.mob{display:block;position:sticky;top:env(safe-area-inset-top,0px);z-index:15;background:var(--bg);margin:0 -16px 12px;padding:8px 16px;border-bottom:1px solid var(--line)}.errs{max-height:none}}
+@media (max-width:520px){.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));width:100%;gap:6px}.stat{min-width:0;padding:5px 8px}.stat b{font-size:15px}.scores{grid-template-columns:repeat(2,minmax(0,1fr))}.essay{font-size:15.5px}h1{font-size:20px}}
+@media (pointer:coarse){.chip{min-height:36px;padding:6px 12px 6px 10px}.switch{min-height:40px}.btn{min-height:40px}.sortrow button{min-height:36px}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 </style>
 </head>
@@ -157,7 +161,7 @@ mark ins{text-decoration:none;font-weight:600;color:var(--ck)}
 </div>
 <div class="stats" id="stats"></div>
 </header>
-<div class="mob"><label for="sel" class="sub" style="display:block;margin:0 0 4px">Chọn mã học viên</label><select id="sel"></select></div>
+<div class="mob"><div class="mob-row"><button class="navbtn" id="mprev" aria-label="Bài trước">‹</button><select id="sel" aria-label="Chọn mã học viên"></select><button class="navbtn" id="mnext" aria-label="Bài sau">›</button></div></div>
 <div class="grid">
 <aside class="card side">
 <div class="side-h">
@@ -196,6 +200,7 @@ const q=$("q").value.trim().toLowerCase();
 let L=DATA.map((d,i)=>({d,i})).filter(x=>!q||x.d.name.toLowerCase().includes(q)||String(x.d.n)===q);
 if(sortBy==="sc")L.sort((a,b)=>avg(a.d.s)-avg(b.d.s));
 $("list").innerHTML=L.map(({d,i})=>{const a=avg(d.s),f=flagOf(d);return `<button class="li" data-i="${i}" aria-current="${i===cur}"><span class="no">#${d.n}</span><span style="min-width:0"><span class="nm">${esc(d.name)}</span></span><span class="pill ${band(a)}">${a.toFixed(1)}</span></button>`}).join("")||`<p class="sub" style="padding:8px">Không tìm thấy học viên.</p>`;
+$("mprev").disabled=cur===0;$("mnext").disabled=cur===DATA.length-1;
 $("sel").innerHTML=DATA.map((d,i)=>`<option value="${i}" ${i===cur?"selected":""}>#${d.n} · ${esc(d.name)} — ${avg(d.s).toFixed(1)}</option>`).join("");
 }
 function essayHTML(d){
@@ -263,6 +268,8 @@ document.querySelectorAll(".li").forEach(b=>b.onclick=()=>go(+b.dataset.i));
 function go(i){if(i<0||i>=DATA.length)return;cur=i;closePop();render();$("essayCard").scrollIntoView({block:"start",behavior:"smooth"})}
 $("q").oninput=renderList;
 $("sel").onchange=e=>go(+e.target.value);
+$("mprev").onclick=()=>go(cur-1);$("mnext").onclick=()=>go(cur+1);
+addEventListener("scroll",()=>{if(document.querySelector(".pop"))closePop()},{passive:true});
 $("s-n").onclick=()=>{sortBy="n";$("s-n").setAttribute("aria-pressed","true");$("s-sc").setAttribute("aria-pressed","false");renderList()};
 $("s-sc").onclick=()=>{sortBy="sc";$("s-sc").setAttribute("aria-pressed","true");$("s-n").setAttribute("aria-pressed","false");renderList()};
 document.addEventListener("click",closePop);
