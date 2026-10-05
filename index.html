@@ -281,7 +281,7 @@ table.rk{width:100%;border-collapse:collapse;font-size:13px;font-variant-numeric
 .who-l{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 12px}
 .who-l button{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:3px 10px;font-size:12px}
 .who-l button:hover{background:var(--sunk)}
-.prio{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px;counter-reset:p}
+.prio{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px 20px;counter-reset:p}
 .prio li{display:grid;grid-template-columns:28px minmax(0,1fr);gap:10px;font-size:13.5px}
 .prio li::before{counter-increment:p;content:counter(p);width:26px;height:26px;border-radius:50%;background:var(--accent-soft);color:var(--accent);font-weight:700;display:grid;place-items:center}
 .prio small{display:block;color:var(--muted);font-size:12.5px}
@@ -556,14 +556,14 @@ ${cr.map(c=>`<div class="hbar" title="${c.c}: average ${c.av.toFixed(2)} · ${c.
 ${cats.map(o=>`<details class="ec"><summary><span class="t">${ECL[o.c]} <span class="tag k-${mk(o)}">${KS[mk(o)]}</span></span><span class="m">${o.st.size} students (${pct(o.st.size)}%) · ${o.n} errors</span><span class="trk"><i style="width:${o.st.size/n*100}%"></i></span></summary>
 <ul class="exl">${o.ex.map(({e,x})=>`<li><del>${esc(e.q)}</del> → <ins>${esc(e.fix).replace(/\n/g," / ")}</ins><span class="w">${esc(e.why)} · ${nm(x)}</span></li>`).join("")}</ul>
 <div class="who-l">${[...o.st].sort((p,q)=>q[1]-p[1]||DATA[p[0]].n-DATA[q[0]].n).map(([i,c])=>`<button type="button" data-go="${i}">${esc(label(DATA[i]))}${c>1?" ×"+c:""}</button>`).join("")}</div></details>`).join("")}</div>
-<div class="card sec"><h2>Teaching priorities <small>most widespread first</small></h2>
-<ol class="prio">${cats.slice(0,3).map(o=>{const z=o.ex[0];return `<li><span><b>${ECL[o.c]}</b> – ${o.st.size} of ${n} students (${pct(o.st.size)}%), ${o.n} errors.<small>e.g. “${esc(z.e.q)}” → “${esc(z.e.fix).replace(/\n/g," / ")}”</small></span></li>`}).join("")}
-<li><span><b>${weakest.c}</b> is the weakest criterion (class average ${weakest.av.toFixed(1)}; ${weakest.lo} students below 5).${under?`<small>${under} essays are under 120 words – remind the class to develop each of the 3 points.</small>`:""}</span></li></ol></div>
-</div>
 <div class="card sec"><h2>Error map <small>students × error types · darker = more errors</small></h2>
 <div class="hmwrap"><table class="hm"><thead><tr><th></th>${cats.map(o=>`<th title="${ECL[o.c]}"><span>${ECS[o.c]}</span></th>`).join("")}<th><span>Total</span></th></tr></thead>
 <tbody>${HR.map(x=>`<tr><th class="row"><button type="button" data-go="${x.i}">${nm(x)}</button></th>${cats.map(o=>{const c=o.st.get(x.i)||0;return `<td class="${c?"c"+Math.min(c,3):""}" title="${esc(label(x.d))} · ${ECL[o.c]}: ${c}">${c||""}</td>`}).join("")}<td class="tot">${x.ne}</td></tr>`).join("")}</tbody></table></div>
-<div class="hmkey"><span><i style="background:var(--sunk)"></i>0</span><span><i style="background:color-mix(in srgb,var(--accent) 24%,var(--surface))"></i>1</span><span><i style="background:color-mix(in srgb,var(--accent) 52%,var(--surface))"></i>2</span><span><i style="background:var(--accent)"></i>3+</span></div></div>`;
+<div class="hmkey"><span><i style="background:var(--sunk)"></i>0</span><span><i style="background:color-mix(in srgb,var(--accent) 24%,var(--surface))"></i>1</span><span><i style="background:color-mix(in srgb,var(--accent) 52%,var(--surface))"></i>2</span><span><i style="background:var(--accent)"></i>3+</span></div></div>
+</div>
+<div class="card sec"><h2>Teaching priorities <small>most widespread first</small></h2>
+<ol class="prio">${cats.slice(0,3).map(o=>{const z=o.ex[0];return `<li><span><b>${ECL[o.c]}</b> – ${o.st.size} of ${n} students (${pct(o.st.size)}%), ${o.n} errors.<small>e.g. “${esc(z.e.q)}” → “${esc(z.e.fix).replace(/\n/g," / ")}”</small></span></li>`}).join("")}
+<li><span><b>${weakest.c}</b> is the weakest criterion (class average ${weakest.av.toFixed(1)}; ${weakest.lo} students below 5).${under?`<small>${under} essays are under 120 words – remind the class to develop each of the 3 points.</small>`:""}</span></li></ol></div>`;
 }
 function setView(v){view=v;closePop();
 $("tab-ess").setAttribute("aria-selected",v==="ess");$("tab-dash").setAttribute("aria-selected",v==="dash");
