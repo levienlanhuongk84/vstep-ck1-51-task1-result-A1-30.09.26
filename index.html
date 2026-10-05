@@ -355,10 +355,11 @@ $("fix").onclick=()=>{showFix=!showFix;render()};
 $("prev").onclick=()=>go(cur-1);$("next").onclick=()=>go(cur+1);
 $("cpRw").onclick=()=>copy(DATA[cur].rw.join("\n"));
 $("cpAll").onclick=()=>{const d=DATA[cur],a=avg(d.s);copy([`VSTEP WRITING TASK 1 FEEDBACK – ${d.name} (CK1-51)`,`Scores: TF ${d.s[0]} · Org ${d.s[1]} · Vocab ${d.s[2]} · Gram ${d.s[3]} → ${a.toFixed(1)}/10`,"",`Feedback: ${d.cmt}`,...d.g.filter(g=>!g[0].startsWith("⚠")).map(g=>"- "+g[0]),"","ERRORS TO FIX:",...d.e.map(e=>`${e.id}. "${e.q.replace(/\n/g," / ")}" → ${e.fix.replace(/\n/g," / ")} (${e.why})`),"","SUGGESTED REWRITE:",...d.rw].join("\n"))};
-document.querySelectorAll(".li").forEach(b=>b.onclick=()=>go(+b.dataset.i));
+
 }
 function go(i){if(i<0||i>=DATA.length)return;cur=i;closePop();render();$("essayCard").scrollIntoView({block:"start",behavior:"smooth"})}
 $("q").oninput=renderList;
+$("list").addEventListener("click",e=>{const b=e.target.closest(".li");if(b)go(+b.dataset.i)});
 $("sel").onchange=e=>go(+e.target.value);
 $("mprev").onclick=()=>go(cur-1);$("mnext").onclick=()=>go(cur+1);
 addEventListener("scroll",()=>{if(document.querySelector(".pop"))closePop()},{passive:true});
