@@ -243,7 +243,10 @@ mark ins{text-decoration:none;font-weight:600;color:var(--ck)}
 .hist{display:flex;align-items:flex-end;gap:8px;height:180px;border-bottom:1px solid var(--line)}
 .hist .col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;gap:4px;min-width:0}
 .hist .col b{font-size:12px;font-variant-numeric:tabular-nums}
-.hist .col i{display:block;width:100%;max-width:46px;background:var(--accent);border-radius:4px 4px 0 0}
+.hist .stk{display:flex;flex-direction:column;gap:2px;width:100%;max-width:46px;border-radius:4px 4px 0 0;overflow:hidden}
+.hist .stk i{display:block;min-height:3px}
+/* bar colour = score band, same colours as the band pills and the ranking */
+.hist .stk i.b-bad{background:var(--bad)}.hist .stk i.b-lo{background:var(--warn)}.hist .stk i.b-mid{background:var(--accent)}.hist .stk i.b-hi{background:var(--ok)}
 .hlab{display:flex;gap:8px;margin-top:6px}.hlab span{flex:1;text-align:center;font-size:11px;color:var(--muted);min-width:0}
 .bands{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
 .hbar{display:grid;grid-template-columns:minmax(96px,150px) minmax(0,1fr) 44px;gap:10px;align-items:center;padding:7px 0;font-size:13px}
@@ -521,7 +524,7 @@ const kpi=(b,s,sm)=>`<div class="kpi"><b>${b}</b><span>${s}</span>${sm?`<small>$
 // distribution
 const BL=["<3","3–3.9","4–4.9","5–5.9","6–6.9","7–7.9","8–8.9","9–10"],bins=BL.map(()=>[]);
 L.forEach(x=>bins[x.a<3?0:Math.min(7,Math.floor(x.a)-2)].push(x));const bmax=Math.max(...bins.map(b=>b.length),1);
-const bandsN=["Weak","Average","Good","Very good"].map(b=>[b,L.filter(x=>bandName(x.a)===b).length]);
+const BANDS=["Weak","Average","Good","Very good"],bandsN=BANDS.map(b=>[b,L.filter(x=>bandName(x.a)===b).length]);
 const bandCls={"Weak":"b-bad","Average":"b-lo","Good":"b-mid","Very good":"b-hi"};
 // criteria
 const cr=CR.map((c,i)=>{const v=L.map(x=>x.d.s[i]);return{c,av:v.reduce((p,q)=>p+q,0)/n,lo:L.filter(x=>x.d.s[i]<5).length}});
@@ -537,10 +540,10 @@ $("dash").innerHTML=`
 <div class="kpis">${kpi((L.reduce((s,x)=>s+x.a,0)/n).toFixed(1),"Class average","median "+med.toFixed(2).replace(/0$/,""))}${kpi(byA[0].a.toFixed(1),"Highest",nm(byA[0]))}${kpi(byA[n-1].a.toFixed(1),"Lowest",nm(byA[n-1]))}${kpi(under,"Under 120 words",pct(under)+"% of essays")}${kpi(tot,"Errors marked",(tot/n).toFixed(1)+" per essay")}${kpi(flg,"Essays to check","off-topic or flagged")}</div>
 <div class="d2">
 <div class="card sec"><h2>Score distribution <small>${n} essays · essay score /10</small></h2>
-<div class="hist" role="img" aria-label="Number of essays in each score range">${bins.map((b,j)=>`<div class="col" title="${BL[j]}: ${b.length} essay${b.length===1?"":"s"}${b.length?" – "+esc(b.map(x=>label(x.d)).join(", ")):""}"><b>${b.length||""}</b><i style="height:${b.length/bmax*100}%;${b.length?"":"min-height:0"}"></i></div>`).join("")}</div>
+<div class="hist" role="img" aria-label="Number of essays in each score range">${bins.map((b,j)=>`<div class="col" title="${BL[j]}: ${b.length} essay${b.length===1?"":"s"}${b.length?" – "+esc(b.map(x=>label(x.d)).join(", ")):""}"><b>${b.length||""}</b><span class="stk" style="height:${b.length/bmax*100}%">${BANDS.map(nm=>[nm,b.filter(x=>bandName(x.a)===nm)]).filter(s=>s[1].length).reverse().map(([nm,xs])=>`<i class="${bandCls[nm]}" style="flex:${xs.length}" title="${nm}: ${xs.length}"></i>`).join("")}</span></div>`).join("")}</div>
 <div class="hlab">${BL.map(l=>`<span>${l}</span>`).join("")}</div>
 <div class="bands">${bandsN.map(([b,c])=>`<span class="pill ${bandCls[b]}">${b} · ${c}</span>`).join("")}</div>
-<p class="note">Weak &lt;5 · Average 5–6.4 · Good 6.5–7.9 · Very good ≥8</p></div>
+<p class="note">Bar colour = band: Weak &lt;5 · Average 5–6.4 · Good 6.5–7.9 · Very good ≥8 (the 6–6.9 bar is split at 6.5)</p></div>
 <div class="card sec"><h2>Criteria averages <small>/10 · students below 5</small></h2>
 ${cr.map(c=>`<div class="hbar" title="${c.c}: average ${c.av.toFixed(2)} · ${c.lo} student${c.lo===1?"":"s"} below 5"><span>${c.c}</span><div class="trk"><i style="width:${c.av*10}%"></i></div><b>${c.av.toFixed(1)}</b></div>`).join("")}
 <p class="note">Weakest criterion: <b style="color:var(--fg)">${weakest.c}</b> (${weakest.av.toFixed(1)}) · ${cr.map(c=>`${c.c.split(" ")[0]} &lt;5: ${c.lo}`).join(" · ")}</p></div>
