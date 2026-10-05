@@ -209,11 +209,15 @@ mark ins{text-decoration:none;font-weight:600;color:var(--ck)}
   .lh-hero .lh-chips { gap: 5px; }
   .lh-hero .lh-chips span { padding: 4px 9px; font-size: 11px; }
 }
-.lh-foot { display: flex; flex-direction: column; align-items: center; gap: 6px; padding-inline: 16px; padding-block: 28px 36px; border-top: 1px solid var(--line); margin-top: 24px; text-align: center; }
-.lh-foot img { width: 64px; height: auto; }
-.lh-foot .site { font: 500 12px/1 "Roboto", sans-serif; letter-spacing: .32em; color: var(--accent); }
-.lh-foot .tag { display: flex; align-items: center; gap: 10px; font: 400 11.5px/1 "Roboto", sans-serif; letter-spacing: .22em; text-transform: uppercase; color: var(--muted); }
-.lh-foot .tag::before, .lh-foot .tag::after { content: ""; width: 28px; height: 1px; background: var(--gold); }
+@media (max-width: 760px) { .lh-hero { background-size: auto 196px; background-repeat: no-repeat; background-color: #3A1766; background-image: url("assets/lh-hero-bg.jpg"), linear-gradient(180deg, #4F2879, #3A1766); } }
+.lh-foot { position: relative; overflow: hidden; height: 150px; margin-top: 28px; display: grid; place-items: center;
+  background: radial-gradient(circle at 22% 30%, rgba(255,255,255,.85) 0 1px, transparent 2.5px), radial-gradient(circle at 64% 22%, rgba(255,255,255,.7) 0 1px, transparent 2.5px), radial-gradient(circle at 78% 74%, rgba(255,255,255,.6) 0 1px, transparent 2.5px), radial-gradient(circle at 35% 80%, rgba(255,255,255,.55) 0 1px, transparent 2.5px),
+  radial-gradient(ellipse 230px 110px at 50% 50%, rgba(220,190,255,.42), rgba(160,110,225,.12) 55%, transparent 72%), linear-gradient(180deg, #542D80 0%, #4A2775 55%, #41216A 100%); }
+.lh-foot::before, .lh-foot::after { content: ""; position: absolute; top: 0; bottom: 0; background: url("assets/lh-hero-bg.jpg") no-repeat; background-size: auto 100%; pointer-events: none; }
+.lh-foot::before { left: 0; width: 120px; background-position: left center; -webkit-mask-image: linear-gradient(90deg, #000 55%, transparent); mask-image: linear-gradient(90deg, #000 55%, transparent); }
+.lh-foot::after { right: 0; width: 310px; background-position: right center; -webkit-mask-image: linear-gradient(270deg, #000 70%, transparent); mask-image: linear-gradient(270deg, #000 70%, transparent); }
+.lh-foot img { position: relative; z-index: 1; width: 124px; height: auto; filter: drop-shadow(0 0 16px rgba(232,205,255,.55)); }
+@media (max-width: 760px) { .lh-foot { height: 124px; } .lh-foot img { width: 100px; } .lh-foot::before { width: 90px; } .lh-foot::after { width: 190px; } }
 .top .apptitle { font-size: 20px; margin: 0; }
 </style>
 </head>
@@ -411,6 +415,6 @@ $("signout").onclick=()=>{$("app").classList.add("solo");try{localStorage.remove
 (()=>{let r=null;try{r=JSON.parse(localStorage.getItem(RK)||"null")}catch(e){}
 if(r&&r.name){$("fn").value=r.name;$("cl").value=r.cls;$("pw").value=r.code;$("rem").checked=true;tryLogin(r.name,r.cls,r.code,true,true)}})();
 </script>
-<footer class="lh-foot"><img src="assets/lh-logo.webp" alt="" width="64" height="49" loading="lazy"><div class="site">LEVIENLANHUONG.COM</div><div class="tag">Learn better · Go further</div></footer>
+<footer class="lh-foot"><img src="assets/lh-logo.webp" alt="JH – levienlanhuong.com" width="124" height="94" loading="lazy"></footer>
 </body>
 </html>
