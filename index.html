@@ -123,6 +123,13 @@ mark ins{text-decoration:none;font-weight:600;color:var(--ck)}
 .overall b{font-size:24px;color:var(--accent);font-variant-numeric:tabular-nums}
 .overall span{font-size:12.5px;color:var(--muted)}
 .cmt{margin:0;line-height:1.6}
+/* Feedback: summary sentence, then one row per VSTEP criterion — name · band · reason */
+.crit{list-style:none;margin:10px 0 0;padding:0;border-top:1px solid var(--line)}
+.crit li{display:grid;grid-template-columns:8.6em 2.6em minmax(0,1fr);gap:4px 10px;align-items:baseline;padding:8px 0;border-bottom:1px solid var(--line);line-height:1.55}
+.crit .cn{font-weight:600}
+.crit .pill{min-width:0;padding:1px 7px;justify-self:start}
+.fbwarn{margin:10px 0 0;padding:8px 12px;border-radius:10px;background:color-mix(in srgb,var(--warn) 14%,transparent);border-left:3px solid var(--warn);font-size:13px}
+@media (max-width:520px){.crit li{grid-template-columns:auto minmax(0,1fr)}.crit .ct{grid-column:1/-1}}
 .gl{margin:10px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:6px}
 .gl li{font-size:13px;padding:6px 10px;border-radius:8px;background:var(--sunk);display:flex;gap:8px}
 .tag{font-size:10.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;border-radius:5px;padding:1px 6px;white-space:nowrap;align-self:flex-start;margin-top:2px}
@@ -360,6 +367,17 @@ const avg=s=>Math.round(s.reduce((a,b)=>a+b,0)/4*10)/10;
 const band=x=>x>=8?"b-hi":x>=6.5?"b-mid":x>=5?"b-lo":"b-bad";
 const bandName=x=>x>=8?"Very good":x>=6.5?"Good":x>=5?"Average":"Weak";
 const esc=s=>s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+// Feedback text = "<summary> Task Fulfilment N: … Organization N: … Vocabulary N: … Grammar N: …" (+ teacher-only "⚠ …").
+// Split into one row per criterion; anything that doesn't split into all four shows as one paragraph, as before.
+const CRX=/\s*\b(Task Fulfil?ment|Organi[sz]ation|Vocabulary|Grammar)\s+(\d{1,2})\s*:\s*/;
+function fbParts(c){let warn="";const w=c.indexOf("⚠");if(w>=0){warn=c.slice(w).trim();c=c.slice(0,w)}
+const p=c.trim().split(CRX),rows=[];for(let i=1;i+2<p.length;i+=3)rows.push([p[i],+p[i+1],p[i+2].trim()]);
+const ix=rows.map(r=>["Tas","Org","Voc","Gra"].indexOf(r[0].slice(0,3)));
+if(rows.length!==4||ix.join()!=="0,1,2,3")return null;
+return{lead:p[0].trim(),rows:rows.map((r,i)=>[CR[i],r[1],r[2]]),warn}}
+function fbHTML(d){const f=fbParts(d.cmt);if(!f)return `<p class="cmt">${esc(d.cmt)}</p>`;
+return `${f.lead?`<p class="cmt">${esc(f.lead)}</p>`:""}<ul class="crit">${f.rows.map(([n,b,t])=>`<li><span class="cn">${n}</span><span class="pill ${band(b)}">${b}</span><span class="ct">${esc(t)}</span></li>`).join("")}</ul>${f.warn?`<p class="fbwarn teach">${esc(f.warn)}</p>`:""}`}
+const fbText=d=>{const f=fbParts(d.cmt);return f?[`Feedback: ${f.lead}`,...f.rows.map(([n,b,t])=>`- ${n} ${b}: ${t}`)]:[`Feedback: ${d.cmt.replace(/\s*⚠.*$/,"")}`]};
 const flagOf=d=>d.g.filter(g=>g[0].startsWith("⚠")).length?"Check":(d.cmt.includes("OFF-TOPIC")?"Off-topic":"");
 let cur=0,sortBy="n",showFix=false,off=new Set();
 // Teacher privacy: codes by default; real names only via the "Names" or "Reveal one name" dropdowns
@@ -409,7 +427,7 @@ $("panel").innerHTML=`
 <div class="card sec"><h2>Scores <small>VSTEP · each criterion /10</small></h2>
 <div class="scores">${d.s.map((v,i)=>`<div class="sc"><span>${CR[i]}</span><b>${v}<small> /10</small></b><div class="bar"><i style="width:${v*10}%"></i></div></div>`).join("")}</div>
 <div class="overall"><span>Essay score (average of 4 criteria)<br><strong style="color:var(--fg)">${bandName(a)}</strong></span><b>${a.toFixed(1)}</b></div></div>
-<div class="card sec"><h2>Feedback</h2><p class="cmt">${esc(d.cmt)}</p>
+<div class="card sec"><h2>Feedback</h2>${fbHTML(d)}
 ${d.g.filter(g=>!g[0].startsWith("⚠")).length?`<ul class="gl">${d.g.filter(g=>!g[0].startsWith("⚠")).map(g=>`<li><span class="tag k-${g[1]}">${KS[g[1]]}</span><span>${esc(g[0])}</span></li>`).join("")}</ul>`:""}</div>
 <div class="card sec"><h2>Errors <small>${d.e.length} errors · tap to find in the essay</small></h2>
 <div class="errs">${d.e.map(e=>`<button class="er k-${e.k}${off.has(e.k)?" hid":""}" data-e="${e.id}"><span class="n">${e.id}</span><span><span class="q">${esc(e.q)}</span><br><span class="f">${esc(e.fix)}</span><span class="w"><span class="tag k-${e.k}">${KS[e.k]}</span>${esc(e.why)}</span></span></button>`).join("")}</div></div>
@@ -440,7 +458,7 @@ document.querySelectorAll(".chip[data-k]").forEach(b=>b.onclick=()=>{const k=b.d
 $("fix").onclick=()=>{showFix=!showFix;render()};
 $("prev").onclick=()=>go(cur-1);$("next").onclick=()=>go(cur+1);
 $("cpRw").onclick=()=>copy(DATA[cur].rw.join("\n"));
-$("cpAll").onclick=()=>{const d=DATA[cur],a=avg(d.s);copy([`VSTEP WRITING TASK 1 FEEDBACK – ${d.name} (CK1-51)`,`Scores: TF ${d.s[0]} · Org ${d.s[1]} · Vocab ${d.s[2]} · Gram ${d.s[3]} → ${a.toFixed(1)}/10`,"",`Feedback: ${d.cmt}`,...d.g.filter(g=>!g[0].startsWith("⚠")).map(g=>"- "+g[0]),"","ERRORS TO FIX:",...d.e.map(e=>`${e.id}. "${e.q.replace(/\n/g," / ")}" → ${e.fix.replace(/\n/g," / ")} (${e.why})`),"","SUGGESTED REWRITE:",...d.rw].join("\n"))};
+$("cpAll").onclick=()=>{const d=DATA[cur],a=avg(d.s);copy([`VSTEP WRITING TASK 1 FEEDBACK – ${d.name} (CK1-51)`,`Scores: TF ${d.s[0]} · Org ${d.s[1]} · Vocab ${d.s[2]} · Gram ${d.s[3]} → ${a.toFixed(1)}/10`,"",...fbText(d),...d.g.filter(g=>!g[0].startsWith("⚠")).map(g=>"- "+g[0]),"","ERRORS TO FIX:",...d.e.map(e=>`${e.id}. "${e.q.replace(/\n/g," / ")}" → ${e.fix.replace(/\n/g," / ")} (${e.why})`),"","SUGGESTED REWRITE:",...d.rw].join("\n"))};
 
 }
 function go(i){if(i<0||i>=DATA.length)return;cur=i;closePop();render();$("essayCard").scrollIntoView({block:"start",behavior:"smooth"})}
